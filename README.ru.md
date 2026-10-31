@@ -4,7 +4,7 @@
 
 [English](README.md) · **Русский**
 
-**Неофициальная пара пейлоадов с открытым кодом для хоумбрю-сцены PS5.**
+**Неофициальный пейлоад с открытым кодом для хоумбрю-сцены PS5.**
 Скройте плитки «PlayStation Store» и «Все приложения» с главного экрана одним файлом и верните их другим.
 
 [![Релиз](https://img.shields.io/github/v/release/freefelt/store_tile_hider_ps5?label=%D1%80%D0%B5%D0%BB%D0%B8%D0%B7)](https://github.com/freefelt/store_tile_hider_ps5/releases/latest)

@@ -4,7 +4,7 @@
 
 **English** · [Русский](README.ru.md)
 
-**An unofficial, open-source pair of payloads for the PS5 homebrew scene.**
+**An unofficial, open-source payload for the PS5 homebrew scene.**
 Hide the "PlayStation Store" and "All Apps" tiles from the home screen with one file, bring them back with another.
 
 [![Release](https://img.shields.io/github/v/release/freefelt/store_tile_hider_ps5?label=release)](https://github.com/freefelt/store_tile_hider_ps5/releases/latest)
