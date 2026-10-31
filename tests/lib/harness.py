@@ -17,6 +17,9 @@ def summary():
 def run(env=None):                # one toggle; returns (exit code, stderr)
     r = subprocess.run([f"{OUT}/StoreTileHider_host"], env=env or ENV, capture_output=True, text=True)
     return r.returncode, r.stderr
+def notice(err):                  # the text of the notification (the host build prints it to stderr as one line "NOTIFY: ...")
+    lines = [l for l in err.splitlines() if l.startswith("NOTIFY: ")]
+    return lines[-1][len("NOTIFY: "):] if lines else ""
 def sha(path):
     return hashlib.sha256(open(path, "rb").read()).hexdigest()
 def q(sql, *a, path=APP):

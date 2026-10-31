@@ -28,7 +28,7 @@ Hide the "PlayStation Store" and "All Apps" tiles from the home screen with one 
 ## ✨ What you get
 
 - **One file, `StoreTileHider-<version>.elf`.** Send it to the console and it **hides** two tiles: **PlayStation Store** (the first tile on the Games tab) and **All Apps** (the first tile on the Media tab). Send it again and it **shows** them, if they are hidden. Every run is one toggle.
-- **A notification says what was done.** In English and Russian: "tiles hidden" or "tiles shown", and why (the tiles were shown, or they were hidden). The same text is in `/data/StoreTileHider/last-run.log`.
+- **A short notification.** Just "tiles hidden" or "tiles shown" (in English and Russian). The details (why, the check, both tiles) are in `/data/StoreTileHider/last-run.log`.
 - **One thing is changed in the system database:** the `visible` flag of these two tiles. Nothing else is touched. The method was tried on a console: the tiles stay hidden after reboots and sleep.
 - **A copy before every change.** The console's tile database is copied to `/data/StoreTileHider/backup` first; if the copy fails, nothing is changed. The very first copy is never overwritten.
 - **All or nothing.** The change is one database transaction: on any error everything is rolled back. Afterwards the database is checked and the result is read back.
@@ -60,10 +60,12 @@ nc -q0 192.168.1.42 9021 < StoreTileHider-<version>.elf
 
 ### Step 4. Read the message
 
-After a second or two the console shows a notification. The first time, when the tiles are shown, it looks like this:
+After a second or two the console shows a short notification: **`tiles hidden / плитки скрыты`** or **`tiles shown / плитки показаны`**.
+The details are in `/data/StoreTileHider/last-run.log`, for example:
 
 ```
-Store Tile Hider 0.1: tiles hidden / плитки скрыты
+Store Tile Hider 0.1 (SDK v0.45)
+tiles: NPXS40047, NPXS40056
 The tiles were shown, so they are hidden. / Плитки были видны, поэтому скрываю их.
 NPXS40047 PlayStation Store: visible=0 (rows: 1)
 NPXS40056 All Apps: visible=0 (rows: 1)
@@ -76,10 +78,10 @@ If a tile is still on the screen, enter a game and come back to the home screen,
 
 ### Show the tiles again (or hide them again)
 
-Send the same file once more (Step 3). Each run is one toggle: if the tiles are hidden, it shows them (the notification says "tiles shown / плитки показаны"); if any of them is shown, it hides them.
+Send the same file once more (Step 3). Each run is one toggle: if the tiles are hidden, it shows them (the notification says "tiles shown"); if any of them is shown, it hides them.
 
 > [!TIP]
-> Always read the notification: it says what the run did. Sending the file does not need a reboot of the console, and you can send it as many times as you like.
+> Always read the notification: it says whether the run hid or showed the tiles. Sending the file does not need a reboot of the console, and you can send it as many times as you like.
 
 ### Remove
 
@@ -152,7 +154,7 @@ The suite `real` runs on a copy of the database of a real console if you put one
 | `tests/` | the tests: `suites/` (by area), `lib/` (helpers), `build/` (the test build), `check-env.sh`, `setup-env.sh` |
 | `docs/` | documentation: the safety notes and how a release is made |
 | `.github/workflows/` | the checks that run on GitHub: build, tests, release |
-| `VERSION` | the version of the payload (it becomes the name of the file and is shown in the notification and in `last-run.log`) |
+| `VERSION` | the version of the payload (it becomes the name of the file and is written in `last-run.log`) |
 
 How the pieces fit together: `build.sh` runs `scripts/deps.sh` (SDK and SQLite, both pinned and checked), then `scripts/build-elf.sh` (builds SQLite for the PS5 and links
 the program) and `scripts/check-imports.sh`.

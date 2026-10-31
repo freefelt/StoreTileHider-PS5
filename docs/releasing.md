@@ -1,7 +1,7 @@
 # Releasing
 
 A release is made by GitHub Actions from a tag. The file that users download is always called `StoreTileHider-<version>.elf` (the version is also
-written in the notification and in `last-run.log`).
+written in `last-run.log`).
 
 1. Make sure `main` is green (the workflows **Build** and **Tests**).
 2. Write the notes: in `CHANGELOG.md` the heading `## [<version>] - <date>` with the list of changes under it (this text becomes the notes of the release;

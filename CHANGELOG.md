@@ -9,7 +9,7 @@ The first public release.
 
 ### Features
 - One file, `StoreTileHider-<version>.elf`: each run toggles the "PlayStation Store" tile (Games tab) and the "All Apps" tile (Media tab) by changing the `visible` flag in the home screen database. If any of the tiles is shown they are hidden; if all of them are hidden they are shown again.
-- A notification on the console (English and Russian) says what was done and why, the same text is in `/data/StoreTileHider/last-run.log`.
+- A short notification on the console, in English and Russian: "tiles hidden" or "tiles shown" (or why nothing was changed). The details (why, the check, both tiles) are in `/data/StoreTileHider/last-run.log`.
 - A copy of the database before every change (`/data/StoreTileHider/backup`: the first copy is never overwritten, the last 10 are kept); without a copy nothing is changed.
 - One transaction: any error rolls everything back. Afterwards the database is checked and the result is read back.
 - No server, no page, no network: the file does its job and ends.

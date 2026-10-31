@@ -7,7 +7,7 @@
  *
  * Order of work: 1) a copy of the database (the SQLite backup API) in /data/StoreTileHider/backup, without it nothing is changed;
  * 2) one transaction (BEGIN IMMEDIATE, waits up to 5 s for the system), any error rolls everything back; 3) COMMIT, PRAGMA quick_check and
- * a read-back of the result; 4) a notification on the console and the file /data/StoreTileHider/last-run.log.
+ * a read-back of the result; 4) a one-line notification on the console ("tiles hidden" or "tiles shown") and the details in the file /data/StoreTileHider/last-run.log.
  * journal_mode and other settings of the system database are never touched.
  *
  * License: GPL-3.0-or-later. */
@@ -70,7 +70,6 @@ static void host_paths(void)
 
 /* ---------- messages, log and notification ---------- */
 
-static char g_msg[1200];
 static int g_log = -1; /* the log file: open/write/close only, the other stdio calls are not on the list of imports verified on a console */
 
 static void ensure_dir(const char *path)
@@ -124,9 +123,6 @@ static void say(const char *fmt, ...)
             g_log = -1;
         }
     }
-    size_t n = strlen(g_msg);
-    if (n + strlen(line) + 2 < sizeof(g_msg))
-        snprintf(g_msg + n, sizeof(g_msg) - n, "%s\n", line);
 }
 
 static void notify(const char *text)
@@ -141,11 +137,11 @@ static void notify(const char *text)
 #endif
 }
 
-/* The last message: the headline in English and Russian, then the lines collected by say(). */
+/* The notification is one short line, in English and Russian: "tiles hidden" or "tiles shown" (or why nothing was changed). Everything else is in the log. */
 static void finish(const char *en, const char *ru)
 {
-    char text[1700];
-    snprintf(text, sizeof(text), "Store Tile Hider %s: %s / %s\n%s", STH_VERSION, en, ru, g_msg);
+    char text[200];
+    snprintf(text, sizeof(text), "Store Tile Hider: %s / %s", en, ru);
     notify(text);
     if (g_log >= 0) {
         close(g_log);

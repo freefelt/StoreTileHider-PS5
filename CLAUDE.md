@@ -21,7 +21,7 @@ The maintainer (Alexander) tests on a real console (firmware 11.20) and works in
    Never use a libc or SDK function that has not been through the check (`fopen`/`fclose`/`fflush` were caught once; the log file uses `open`/`write`/`close`). The check is the authority; the allowed list holds the imports of builds that were run on a console.
 3. **Tests are quick** (`tests/build/build-test-binaries.sh`, then `scripts/test.sh smoke` or `full`: about a minute). Run them after a change in `src/`.
 4. **Never claim something works on the console unless it was tried there.** Say exactly what was verified on the host and what was not. **The file of this repository has not been run on a console yet** (the method, `visible=0`, was: see section 4); the first run on a console is the first thing to do before the first release.
-5. **Test builds between releases** are made with `STH_DEBUG=N ./build.sh`: the notification and `last-run.log` then say "0.1 debug N", the name of the file stays `StoreTileHider-0.1.elf`. Never in a release.
+5. **Test builds between releases** are made with `STH_DEBUG=N ./build.sh`: `last-run.log` then says "0.1 debug N" (the notification has no version: it is one short line), the name of the file stays `StoreTileHider-0.1.elf`. Never in a release.
 6. **Raise the version** (`VERSION`, `0.N`: raise the second number, there is no third number) after a change that goes to a console; releases are made by a tag (`docs/releasing.md`).
 7. **New functionality comes with tests.** A test must fail if the feature is broken; measure the real behaviour first, do not guess.
 8. **Reports are short.** "All tests passed", or a short statement of what failed and why.
@@ -54,7 +54,7 @@ The host build of the tests is the same code with `-DSTH_HOST_TEST`: the paths m
 2. Open `app.db` read-write, find the user tables `tbl_iconinfo_<uid>` (refuse if there are none or a table lacks `titleId`/`visible`).
 3. `BEGIN IMMEDIATE` (busy timeout 5 s). **Inside the transaction** the state is read: `total` rows of the two tiles in all user tables, `shown` of them with `visible IS NOT 0` (NULL counts as shown). None found: rollback, exit 1. Any shown: the target is `visible=0` (hide); all hidden (`shown == 0`): `visible=1` (show). A mixed state hides all: the aim of the tool is hiding. The notification says which case it was.
 4. `UPDATE ... SET visible=? WHERE titleId=?` for each of the two ids in each user table; a missing tile is reported and skipped.
-5. `COMMIT`, `PRAGMA quick_check`, read back (no row of the two tiles has another value), notification (English and Russian) and `/data/StoreTileHider/last-run.log`.
+5. `COMMIT`, `PRAGMA quick_check`, read back (no row of the two tiles has another value). Then a **one-line** notification ("tiles hidden / плитки скрыты" or "tiles shown / плитки показаны", or the reason nothing was changed) and the details in `/data/StoreTileHider/last-run.log`. Keep the notification this short: the maintainer asked for it (2026-10-31).
 
 Nothing else is written. `journal_mode` is never touched; the SQLite of the PS5 build is compiled without WAL (the console's database is not in WAL mode).
 
