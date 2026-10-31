@@ -1,0 +1,10 @@
+# build outputs and downloaded dependencies
+/.deps/
+/build/
+# copies of a console's databases (private): the real-dump test reads them from here or from STH_REAL_DIR
+/dbs/
+# tests
+__pycache__/
+*.pyc
+*.log
+.DS_Store

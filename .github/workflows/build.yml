@@ -1,0 +1,77 @@
+# Builds the payload on every push and pull request, checks their imports (build.sh does) and the syntax of the scripts and tests, and keeps the ELF as an artifact.
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # A branch push whose commit already carries a tag is covered by the Release workflow of that tag (the same tests, all of them, and the build), so it is skipped here.
+  # Tags are pushed together with the branch, so they are already visible; a pull request, a manual run and the call from Release (a tag ref) always run.
+  gate:
+    runs-on: ubuntu-24.04
+    outputs:
+      run: ${{ steps.g.outputs.run }}
+    steps:
+      - id: g
+        run: |
+          run=true
+          if [ "$GITHUB_EVENT_NAME" = push ] && [ "$GITHUB_REF_TYPE" = branch ]; then
+            if git ls-remote --tags "https://github.com/$GITHUB_REPOSITORY.git" | awk '{print $1}' | grep -qx "$GITHUB_SHA"; then run=false; fi
+          fi
+          echo "run=$run" >> "$GITHUB_OUTPUT"
+          echo "run=$run"
+
+  build:
+    needs: gate
+    if: needs.gate.outputs.run == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install the build tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends clang-18 lld-18 llvm-18-dev make curl unzip build-essential
+
+      - name: Cache the downloaded SDK and SQLite
+        uses: actions/cache@v6
+        with:
+          path: |
+            .deps
+            !.deps/test
+          key: deps-${{ runner.os }}-${{ hashFiles('scripts/deps.sh', 'scripts/build-elf.sh') }}
+          restore-keys: |
+            deps-${{ runner.os }}-
+
+      - name: Build (the SDK version check and the import check are part of it)
+        run: ./build.sh
+
+      - name: Keep the ELF
+        uses: actions/upload-artifact@v7
+        with:
+          name: StoreTileHider-elf
+          path: build/StoreTileHider-*.elf
+          if-no-files-found: error
+          retention-days: 14
+
+  lint:
+    needs: gate
+    if: needs.gate.outputs.run == 'true'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - name: Syntax of the scripts and tests
+        run: |
+          for f in build.sh scripts/*.sh tests/*.sh tests/build/*.sh; do bash -n "$f"; done
+          python3 -m py_compile tests/lib/*.py tests/suites/*/*.py
