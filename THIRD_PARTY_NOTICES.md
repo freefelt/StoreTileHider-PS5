@@ -18,4 +18,4 @@ are used, their SHA-256 sums are pinned in `scripts/deps.sh`. SQLite is built wi
 
 Projects whose sources and issues helped the development:
 [PS5-TabShifter](https://github.com/xvvulcanvx/PS5-TabShifter) (which tables of the home screen database matter), and
-[transmission_ps5](https://github.com/freefelt/transmission_ps5) (the layout of the repository, the build checks and the tests follow it).
+[Transmission-PS5](https://github.com/freefelt/Transmission-PS5) (the layout of the repository, the build checks and the tests follow it).

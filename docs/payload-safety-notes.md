@@ -1,7 +1,7 @@
 # Safety of PS5 payloads: notes for this project
 
 Context: Store Tile Hider (one file, `StoreTileHider-<version>.elf`) writes to a system database of the console, so it is held to the safety rules of PS5 payloads (see
-[`transmission_ps5/docs/payload-safety-notes.md`](https://github.com/freefelt/transmission_ps5/blob/main/docs/payload-safety-notes.md) for the
+[`Transmission-PS5/docs/payload-safety-notes.md`](https://github.com/freefelt/Transmission-PS5/blob/main/docs/payload-safety-notes.md) for the
 long discussion and the results of the rights test on firmware 11.20: there is no real sandbox, a payload runs with effective uid 0 and can write kernel memory).
 
 Notation: **[verified]** from the code, the tests or a console, **[conclusion]** reasoning on verified facts, **[not verified]** a guess.

@@ -186,4 +186,4 @@ The project is licensed under the **GPL-3.0-or-later**. The PS5 payload SDK
 ([ps5-payload-dev/sdk](https://github.com/ps5-payload-dev/sdk)), SQLite and the other
 components keep their own licenses; they are listed in [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
 Thanks to [xvvulcanvx/PS5-TabShifter](https://github.com/xvvulcanvx/PS5-TabShifter) whose source and issues helped to understand which tables of the home screen database matter, and to
-[freefelt/transmission_ps5](https://github.com/freefelt/transmission_ps5), the layout of whose repository this one follows.
+[freefelt/Transmission-PS5](https://github.com/freefelt/Transmission-PS5), the layout of whose repository this one follows.

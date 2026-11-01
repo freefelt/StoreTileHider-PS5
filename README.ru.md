@@ -186,4 +186,4 @@ Issues и pull request'ы приветствуются. Пожалуйста, д
 ([ps5-payload-dev/sdk](https://github.com/ps5-payload-dev/sdk)), SQLite и остальные
 компоненты сохраняют свои лицензии; они перечислены в [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
 Спасибо [xvvulcanvx/PS5-TabShifter](https://github.com/xvvulcanvx/PS5-TabShifter): его исходник и issues помогли понять, какие таблицы базы главного экрана важны, и
-[freefelt/transmission_ps5](https://github.com/freefelt/transmission_ps5), по устройству репозитория которого сделан этот.
+[freefelt/Transmission-PS5](https://github.com/freefelt/Transmission-PS5), по устройству репозитория которого сделан этот.

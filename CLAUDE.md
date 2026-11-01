@@ -10,7 +10,7 @@ the traps. It is written for an AI coding agent that starts without any context 
 - `THIRD_PARTY_NOTICES.md`: licenses. The whole project is GPL-3.0-or-later.
 
 The maintainer (Alexander) tests on a real console (firmware 11.20) and works in Russian; the code, comments, commits and docs are English. The layout of this repository, the build checks and the tests follow
-[freefelt/transmission_ps5](https://github.com/freefelt/transmission_ps5) on purpose: keep them the same.
+[freefelt/Transmission-PS5](https://github.com/freefelt/Transmission-PS5) on purpose: keep them the same.
 
 ---
 
@@ -82,12 +82,12 @@ Nothing else is written. `journal_mode` is never touched; the SQLite of the PS5 
 
 ## 7. Status and plans
 
-- 0.1 is ready to tag after the first run of the file on a console (two runs: hide, then show) (see 1.4) and a green Tests workflow. No screenshots or icon yet (the README of `transmission_ps5` has them; a console notification is the only "UI" here).
+- 0.1 is ready to tag after the first run of the file on a console (two runs: hide, then show) (see 1.4) and a green Tests workflow. No screenshots or icon yet (the README of `Transmission-PS5` has them; a console notification is the only "UI" here).
 - Ideas, only if asked: other tile ids (Plus, Remote Play, Share Play) as a separate file. A user added after the first run needs nothing: every run reads the list of user tables.
 
 ## 8. Decisions of the maintainer worth remembering
 
 - The project is **only** the hiding of the two tiles and its undo, in **one file that toggles** (the maintainer dropped the two-file design on 2026-10-31): everything else that the first experiments had (a web page, a library tile, removal of TabShifter's tile) was dropped.
 - Backups stay (first + last 10) even though they are a last resort: a failed write is rolled back by SQLite, the copies are for the human who wants to compare.
-- Names: **Store Tile Hider** (`store_tile_hider_ps5`), the file `StoreTileHider-<version>.elf` (the version in the name, as `Transmission-<version>.elf` in `transmission_ps5`).
-- Layout, licence (GPL-3.0-or-later, the same `LICENSE`), build checks (pinned SDK v0.45 with a stamp, SHA-256 of every download, the import check) and tests follow `transmission_ps5`.
+- Names: **Store Tile Hider** (`StoreTileHider-PS5`), the file `StoreTileHider-<version>.elf` (the version in the name, as `Transmission-<version>.elf` in `Transmission-PS5`).
+- Layout, licence (GPL-3.0-or-later, the same `LICENSE`), build checks (pinned SDK v0.45 with a stamp, SHA-256 of every download, the import check) and tests follow `Transmission-PS5`.
